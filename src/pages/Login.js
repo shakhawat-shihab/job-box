@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/login.svg";
-import { logInUser } from "../features/auth/authSlice";
+import { googleLogIn, logInUser } from "../features/auth/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,10 @@ const Login = () => {
     console.log(data);
     dispatch(logInUser({ email: data?.email, password: data?.password }))
   };
+
+  const handleGoogleLogIn = () => {
+    dispatch(googleLogIn());
+  }
 
   useEffect(() => {
     if (!isLoading && email) {
@@ -68,6 +72,14 @@ const Login = () => {
                   </span>
                 </p>
               </div>
+              <button
+                className="font-bold text-white py-3 rounded-full bg-primary w-full"
+                type="button"
+                onClick={() => handleGoogleLogIn()}
+              >
+                Log In with Google
+              </button>
+
             </div>
           </form>
         </div>
