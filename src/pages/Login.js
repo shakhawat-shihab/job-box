@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/login.svg";
-import { googleLogIn, logInUser } from "../features/auth/authSlice";
+import { googleLogIn, logInUser, resetError } from "../features/auth/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
-  const { email, isLoading } = useSelector(state => state.auth)
+  const { user, isLoading, isError, error } = useSelector(state => state.auth)
 
   const onSubmit = (data) => {
     console.log(data);
@@ -22,10 +23,18 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (!isLoading && email) {
+    if (!isLoading && user?.email) {
       navigate("/");
     }
-  }, [isLoading, email])
+  }, [isLoading, user]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error);
+      dispatch(resetError());
+    }
+  }, [isError, error]);
+
 
   return (
     <div className='flex h-screen items-center'>
