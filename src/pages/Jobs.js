@@ -13,14 +13,16 @@ const Jobs = () => {
         <h1 className='font-semibold text-xl'>Find Jobs</h1>
       </div>
       <div className='grid grid-cols-2 gap-5 mt-5'>
-        {/* <JobCard /> */}
+
         {
           data?.data?.map(x =>
-            <div>
-              <h1>{x?.position}</h1>
-              <p>{x?.companyName}</p>
-              <button onClick={() => navigate(`/job-details/${x?._id}`)}>Details</button>
-            </div>)
+            <JobCard jobData={x} />
+            // <div>
+            //   <h1>{x?.position}</h1>
+            //   <p>{x?.companyName}</p>
+            //   <button onClick={() => navigate(`/job-details/${x?._id}`)}>Details</button>
+            // </div>
+          )
         }
       </div>
     </div >
