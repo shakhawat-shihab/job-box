@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import meeting from "../assets/meeting.jpg";
 import { BsArrowRightShort, BsArrowReturnRight } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
-import { useApplyMutation, useGetJobByIdQuery, useQuestionMutation, useReplyMutation } from "../features/job/jobApi";
+import { useApplyMutation, useCloseJobMutation, useGetJobByIdQuery, useQuestionMutation, useReplyMutation } from "../features/job/jobApi";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -12,8 +12,9 @@ const JobDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isLoading, data, isError } = useGetJobByIdQuery(id, {
-    pollingInterval: 5000,
+    // pollingInterval: 5000,
   });
+  const [closeJob] = useCloseJobMutation();
   const [sendQuestion] = useQuestionMutation();
   const [replyQuestion] = useReplyMutation();
   const [apply, { isSuccess }] = useApplyMutation();
@@ -32,6 +33,7 @@ const JobDetails = () => {
     responsibilities,
     overview,
     queries,
+    isClosed,
     _id,
   } = data?.data || {};
 
@@ -63,20 +65,24 @@ const JobDetails = () => {
 
   const handleQuestion = (data) => {
     console.log(data);
+    const date = new Date();
     const questionData = {
       ...data,
       userId: user?._id,
       email: user?.email,
-      jobId: _id
+      jobId: _id,
+      time: date
     }
     sendQuestion(questionData);
     reset();
   }
 
-  const handleReply = (userId) => {
+  const handleReply = (userId, time) => {
     const data = {
       userId,
-      reply
+      reply,
+      time,
+      jobId: _id
     }
     replyQuestion(data);
     setReply("");
@@ -92,12 +98,41 @@ const JobDetails = () => {
         <div className='space-y-5'>
           <div className='flex justify-between items-center mt-5'>
             <h1 className='text-xl font-semibold text-primary'>{position}</h1>
-            <button
-              className='btn'
-              onClick={() => handleApply()}
-            >
-              Apply
-            </button>
+            {
+              user?.role === "candidate"
+              &&
+              <button
+                className='btn'
+                onClick={() => handleApply()}
+              >
+                Apply
+              </button>
+            }
+            {
+              user?.role === "employer"
+              &&
+              <>
+                {
+                  !isClosed
+                    ?
+                    <button
+                      className='btn'
+                      onClick={() => closeJob(_id)}
+                    >
+                      Close Job
+                    </button>
+                    :
+                    <button
+                      className='btn'
+                      disabled
+                    >
+                      Closed
+                    </button>
+
+                }
+              </>
+            }
+
           </div>
           <div>
             <h1 className='text-primary text-lg font-medium mb-3'>Overview</h1>
@@ -145,38 +180,41 @@ const JobDetails = () => {
               General Q&A
             </h1>
             <div className='text-primary my-2'>
-
               {
-                queries?.map(({ question, email, reply, id }) => (
-                  <div key={`${question}`}>
-                    <small>{email}</small>
-                    <p className='text-lg font-medium'>{question}</p>
-                    {reply?.map((item) => (
-                      <p className='flex items-center gap-2 relative left-5'>
-                        <BsArrowReturnRight /> {item}
-                      </p>
-                    ))}
+                queries?.map(({ question, email, reply, id, time }) => {
+                  return (
+                    <div key={`${question}`} className="my-8">
+                      <small>{email}</small>
+                      <p className='text-lg font-medium'>{question}</p>
+                      {
+                        reply?.map((item) => (
+                          <p className='flex items-center gap-2 relative left-5'>
+                            <BsArrowReturnRight /> {item}
+                          </p>
+                        ))
+                      }
 
-                    {
-                      user?.role === "employer"
-                      &&
-                      <div className='flex gap-3 my-5'>
-                        <input placeholder='Reply'
-                          type='text' className='w-full'
-                          // defaultValue={reply}
-                          onBlur={(e) => setReply(e.target.value)}
-                        />
-                        <button
-                          className='shrink-0 h-14 w-14 bg-primary/10 border border-primary hover:bg-primary rounded-full transition-all  grid place-items-center text-primary hover:text-white'
-                          type='button'
-                          onClick={() => handleReply(id)}
-                        >
-                          <BsArrowRightShort size={30} />
-                        </button>
-                      </div>
-                    }
-                  </div>
-                ))}
+                      {
+                        user?.role === "employer"
+                        &&
+                        <div className='flex gap-3 my-5'>
+                          <input placeholder='Reply'
+                            type='text' className='w-full'
+                            // defaultValue={reply}
+                            onBlur={(e) => setReply(e.target.value)}
+                          />
+                          <button
+                            className='shrink-0 h-14 w-14 bg-primary/10 border border-primary hover:bg-primary rounded-full transition-all  grid place-items-center text-primary hover:text-white'
+                            type='button'
+                            onClick={() => handleReply(id, time)}
+                          >
+                            <BsArrowRightShort size={30} />
+                          </button>
+                        </div>
+                      }
+                    </div>)
+                })
+              }
             </div>
             {
               user?.role === "candidate"

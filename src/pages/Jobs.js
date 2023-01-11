@@ -7,6 +7,8 @@ const Jobs = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetJobsQuery();
   // const { position, companyName } = data.data || {};
+
+
   return (
     <div className='pt-14'>
       <div className='bg-primary/10 p-5 rounded-2xl'>
