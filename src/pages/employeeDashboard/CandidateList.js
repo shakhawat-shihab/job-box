@@ -62,7 +62,7 @@ const CandidateList = () => {
                                                         className='underline hover:text-primary'
                                                         onClick={() => { navigate(`/direct-message/${user?.email}/${email}`) }}
                                                     >
-                                                        <small>Message</small>
+                                                        <small>Message g</small>
                                                     </button>
                                                 </div>
                                             </td>
