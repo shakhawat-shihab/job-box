@@ -113,6 +113,12 @@ const JobDetails = () => {
           <div className='flex justify-between items-center mt-5'>
             <h1 className='text-xl font-semibold text-primary'>{position}</h1>
             <div>
+              <button
+                className='btn mr-2'
+                onClick={() => navigate(`/direct-message/${employerEmail}`)}
+              >
+                Contact with HR
+              </button>
               {
                 user?.role === "candidate"
                 &&
@@ -139,7 +145,6 @@ const JobDetails = () => {
                             </button>
                         }
                       </>
-
                       :
                       <button
                         className='btn mr-2'
@@ -148,6 +153,8 @@ const JobDetails = () => {
                         Closed
                       </button>
                   }
+
+
                 </>
               }
 

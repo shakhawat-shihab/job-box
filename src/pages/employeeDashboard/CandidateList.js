@@ -60,9 +60,9 @@ const CandidateList = () => {
                                                 <div class='flex justify-center'>
                                                     <button
                                                         className='underline hover:text-primary'
-                                                        onClick={() => { navigate(`/direct-message/${user?.email}/${email}`) }}
+                                                        onClick={() => { navigate(`/direct-message/${email}`) }}
                                                     >
-                                                        <small>Message g</small>
+                                                        <small>Message</small>
                                                     </button>
                                                 </div>
                                             </td>

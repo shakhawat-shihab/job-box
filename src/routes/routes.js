@@ -39,7 +39,7 @@ const routes = createBrowserRouter([
         )
       },
       {
-        path: "/direct-message/:user1/:user2",
+        path: "/direct-message/:userEmail",
         element: (
           <PrivateRoute>
             <DirectMessage />

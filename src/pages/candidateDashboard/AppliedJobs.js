@@ -50,6 +50,7 @@ const AppliedJobs = () => {
 
 
   const activeClass = "text-white  bg-primary/80 ";
+  const normalClass = "text-primary  bg-primary/40";
 
   return (
     <div>
@@ -57,19 +58,19 @@ const AppliedJobs = () => {
       <div className="my-4">
         <div className='flex justify-end'>
           <button
-            className={`rounded-3xl hover:text-white hover:bg-primary/75  bg-primary/40 text-primary  px-5 py-3 mx-3   ${showRecent ? activeClass : null}  `}
+            className={`rounded-3xl hover:text-white hover:bg-primary/75    px-5 py-3 mx-3   ${showRecent ? activeClass : normalClass}  `}
             onClick={() => dispatch(toggleRecent())}
           >
             Sort by Recent
           </button>
           <button
-            className={`rounded-3xl hover:text-white hover:bg-primary/75  bg-primary/40 text-primary  px-5 py-3 mx-3  ${status?.includes("accepted") ? activeClass : null} `}
+            className={`rounded-3xl hover:text-white hover:bg-primary/75    px-5 py-3 mx-3  ${status?.includes("accepted") ? activeClass : normalClass} `}
             onClick={() => dispatch(changeStatus("accepted"))}
           >
             Accepted
           </button>
           <button
-            className={`rounded-3xl hover:text-white hover:bg-primary/75  bg-primary/40 text-primary  px-5 py-3 mx-3  ${status?.includes("pending") ? activeClass : null} `}
+            className={`rounded-3xl hover:text-white hover:bg-primary/75    px-5 py-3 mx-3  ${status?.includes("pending") ? activeClass : normalClass} `}
             onClick={() => dispatch(changeStatus("pending"))}
           >
             Pending

@@ -5,6 +5,7 @@ import authSlice from '../features/auth/authSlice';
 import filterSlice from '../features/filter/filterSlice';
 
 export const store = configureStore({
+    devTools: true,
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
         auth: authSlice,
