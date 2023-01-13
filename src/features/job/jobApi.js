@@ -25,7 +25,7 @@ const jobApi = apiSlice.injectEndpoints({
                 url: "/approve-job",
                 body: data
             }),
-            invalidatesTags: ["Candidates"]
+            invalidatesTags: ["Candidates", "AppliedJobs"]
         }),
         question: builder.mutation({
             query: (data) => ({
@@ -58,12 +58,14 @@ const jobApi = apiSlice.injectEndpoints({
         getAppliedJobs: builder.query({
             query: (email) => ({
                 url: `/applied-jobs/${email}`,
-            })
+            }),
+            providesTags: ["AppliedJobs"]
         }),
         getMyJobs: builder.query({
             query: (email) => ({
                 url: `/my-jobs/${email}`,
-            })
+            }),
+
         }),
         closeJob: builder.mutation({
             query: (id) => ({
