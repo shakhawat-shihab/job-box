@@ -13,7 +13,7 @@ const JobDetails = () => {
   const navigate = useNavigate();
   const { user: { email, firstName, lastName } } = useSelector(state => state.auth);
   const { isLoading, data, isError } = useGetJobByIdQuery(id, {
-    pollingInterval: 5000,
+    pollingInterval: 3000,
   });
   const [closeJob] = useCloseJobMutation();
   const [sendQuestion] = useQuestionMutation();
@@ -113,12 +113,17 @@ const JobDetails = () => {
           <div className='flex justify-between items-center mt-5'>
             <h1 className='text-xl font-semibold text-primary'>{position}</h1>
             <div>
-              <button
-                className='btn mr-2'
-                onClick={() => navigate(`/direct-message/${employerEmail}`)}
-              >
-                Contact with HR
-              </button>
+              {
+                email !== employerEmail
+                &&
+                <button
+                  className='btn mr-2'
+                  onClick={() => navigate(`/direct-message/${employerEmail}`)}
+                >
+                  Contact with HR
+                </button>
+              }
+
               {
                 user?.role === "candidate"
                 &&
@@ -211,7 +216,7 @@ const JobDetails = () => {
             <h1 className='text-primary text-lg font-medium mb-3'>Skills</h1>
             <ul>
               {skills?.map((skill) => (
-                <li className='flex items-center'>
+                <li key={skill} className='flex items-center'>
                   <BsArrowRightShort /> <span>{skill}</span>
                 </li>
               ))}
@@ -223,7 +228,7 @@ const JobDetails = () => {
             </h1>
             <ul>
               {requirements?.map((skill) => (
-                <li className='flex items-center'>
+                <li key={skill} className='flex items-center'>
                   <BsArrowRightShort /> <span>{skill}</span>
                 </li>
               ))}
@@ -235,7 +240,7 @@ const JobDetails = () => {
             </h1>
             <ul>
               {responsibilities?.map((skill) => (
-                <li className='flex items-center'>
+                <li key={skill} className='flex items-center'>
                   <BsArrowRightShort /> <span>{skill}</span>
                 </li>
               ))}
@@ -257,7 +262,7 @@ const JobDetails = () => {
                       <p className='text-lg font-medium'>{question}</p>
                       {
                         reply?.map((item) => (
-                          <p className='flex items-center gap-2 relative left-5'>
+                          <p key={item} className='flex items-center gap-2 relative left-5'>
                             <BsArrowReturnRight />
                             {item}
                           </p>

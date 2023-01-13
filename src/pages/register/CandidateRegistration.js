@@ -30,6 +30,7 @@ const CandidateRegistration = () => {
   const onSubmit = (data) => {
     console.log(data);
     postUser({ ...data, role: "candidate" });
+    navigate('/')
   };
 
   return (
@@ -112,7 +113,7 @@ const CandidateRegistration = () => {
               {countries
                 .sort((a, b) => a?.name?.common?.localeCompare(b?.name?.common))
                 .map(({ name }) => (
-                  <option value={name.common}>{name.common}</option>
+                  <option key={name} value={name.common}>{name.common}</option>
                 ))}
             </select>
           </div>

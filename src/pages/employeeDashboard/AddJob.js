@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { FiTrash } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { usePostJobMutation } from "../../features/job/jobApi";
 
 const AddJob = () => {
-  const [postJob, { isLoading, isError }] = usePostJobMutation();
+  const [postJob, { isLoading, isError, isSuccess }] = usePostJobMutation();
   const { handleSubmit, register, control } = useForm();
+  const navigate = useNavigate();
   const { user: { email, _id } } = useSelector(state => state.auth)
   const {
     fields: resFields,
@@ -28,10 +31,15 @@ const AddJob = () => {
     console.log(data);
     const date = new Date();
     postJob({ ...data, createdAt: date, applicants: [], queries: [], employerId: _id, employerEmail: email });
+    console.log(isSuccess)
+    console.log(data)
+    // if (isSuccess) {
+    //   toast.success("successfully added");
+    //   navigate("/dashboard");
+    // }
   };
 
-  // useEffect(()=>{
-  // },[])
+
 
   return (
     <div className='flex justify-center items-center overflow-auto p-10'>

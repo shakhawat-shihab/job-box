@@ -34,7 +34,7 @@ const Sidebar = () => {
         {
           role === "employer"
           &&
-          employerRoutes.map(x => <li>
+          employerRoutes.map(x => <li key={x.path}>
             <Link
               className='hover:bg-primary hover:text-white bg-primary/10 transition-all w-full block py-2 px-3 rounded-full'
               to={`${x.path}`}
@@ -46,7 +46,7 @@ const Sidebar = () => {
         {
           role === "candidate"
           &&
-          candidateRoutes.map(x => <li>
+          candidateRoutes.map(x => <li key={x.path}>
             <Link
               className='hover:bg-primary hover:text-white bg-primary/10 transition-all w-full block py-2 px-3 rounded-full'
               to={`${x.path}`}

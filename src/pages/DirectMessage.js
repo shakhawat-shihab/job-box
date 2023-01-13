@@ -16,14 +16,14 @@ const DirectMessage = () => {
     const { register, handleSubmit, reset } = useForm();
 
     const { data: messageData } = useGetMessagesQuery({ user1: user.email, user2: userEmail }, {
-        pollingInterval: 3000
+        pollingInterval: 2000
     });
     // console.log(messageData?.data)
 
 
 
     const sendReplyOfMessage = (data) => {
-        console.log(data);
+        // console.log(data);
         const date = new Date();
         const message = {
             message: data.message,
@@ -36,11 +36,14 @@ const DirectMessage = () => {
         reset();
     }
 
-    // const scrollToBottom = (id) => {
-    //     const element = document.getElementById(id);
-    //     element.scrollTop = element.scrollHeight;
-    // }
-    // scrollToBottom("test")
+
+
+    window.setInterval(function () {
+        var elem = document.getElementById('test');
+        // console.log(elem)
+        elem.scrollTop = elem.scrollHeight + 10000;
+    }, 1000);
+
     return (
         <div className='pt-14'>
             <div class='flex flex-col justify-center items-center h-full w-full mt-10'>
@@ -51,7 +54,7 @@ const DirectMessage = () => {
                         <header class='px-5 py-4 border-b border-gray-100'>
                             <div class='font-semibold text-gray-800'>
                                 Chat with {" "}
-                                <span className='text-sky-700' >
+                                <span className='text-sky-700 text-xl pl-6' >
                                     {data?.data?.firstName}  {data?.data?.lastName}
                                 </span>
                             </div>
@@ -60,11 +63,11 @@ const DirectMessage = () => {
                         <div class='p-3  '
                             style={{ height: '500px' }}
                         >
-                            <div className='' id="test" style={{ overflow: 'scroll', height: '75%' }}>
+                            <div className='' id="test" style={{ overflowY: 'scroll', height: '75%' }}>
                                 {
                                     // ml-auto
                                     messageData?.data?.map(x =>
-                                        <div className={`my-4 `}>
+                                        <div className={`my-4 `} key={x.sendAt}>
                                             <p className={`w-3/4 bg-sky-200 rounded-3xl p-4  ${x?.sendFrom === user.email ? "ml-auto" : null} `}>
                                                 {/* Ante in nibh mauris cursus mattis molestie a iaculis.
                                         Neque egestas congue quisque egestas.

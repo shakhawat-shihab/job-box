@@ -18,7 +18,7 @@ const Jobs = () => {
 
         {
           data?.data?.map(x =>
-            <JobCard jobData={x} />
+            <JobCard key={x?._id} jobData={x} />
             // <div>
             //   <h1>{x?.position}</h1>
             //   <p>{x?.companyName}</p>

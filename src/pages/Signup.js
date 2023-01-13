@@ -44,6 +44,7 @@ const Signup = () => {
     console.log(data);
     delete data.confirmPassword;
     dispatch(createUser(data));
+    navigate('/');
   };
 
   return (

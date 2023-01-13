@@ -16,6 +16,8 @@ const AppliedJobs = () => {
 
   const { data, isLoading } = useGetAppliedJobsQuery(email);
 
+
+
   console.log('data  ==> ', data);
 
   if (isLoading) {
@@ -64,10 +66,10 @@ const AppliedJobs = () => {
             Sort by Recent
           </button>
           <button
-            className={`rounded-3xl hover:text-white hover:bg-primary/75    px-5 py-3 mx-3  ${status?.includes("accepted") ? activeClass : normalClass} `}
-            onClick={() => dispatch(changeStatus("accepted"))}
+            className={`rounded-3xl hover:text-white hover:bg-primary/75    px-5 py-3 mx-3  ${status?.includes("approved") ? activeClass : normalClass} `}
+            onClick={() => dispatch(changeStatus("approved"))}
           >
-            Accepted
+            Approved
           </button>
           <button
             className={`rounded-3xl hover:text-white hover:bg-primary/75    px-5 py-3 mx-3  ${status?.includes("pending") ? activeClass : normalClass} `}

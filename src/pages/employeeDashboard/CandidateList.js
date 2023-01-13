@@ -1,14 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useGetCandidatesQuery } from '../../features/job/jobApi';
+import { useApproveJobMutation, useGetCandidatesQuery } from '../../features/job/jobApi';
 
 const CandidateList = () => {
     const { id } = useParams();
     const { user } = useSelector(state => state.auth);
-    const { data } = useGetCandidatesQuery(id, { pollingInterval: 5000 });
+    const { data } = useGetCandidatesQuery(id, { pollingInterval: 3000 });
     const navigate = useNavigate();
+    const [approveJob] = useApproveJobMutation();
     // console.log(data);
+
+    const approveAJob = (data) => {
+        console.log(data);
+        approveJob(data);
+    }
+
     return (
         <div className='pt-14'>
             {/* <h1>Candidate List</h1> */}
@@ -29,9 +36,11 @@ const CandidateList = () => {
                                     <th class='p-2'>
                                         <div class='font-semibold text-center'>Profile</div>
                                     </th>
-
                                     <th class='p-2'>
                                         <div class='font-semibold text-center'>Contact</div>
+                                    </th>
+                                    <th class='p-2'>
+                                        <div class='font-semibold text-center'>Status</div>
                                     </th>
 
                                 </tr>
@@ -39,8 +48,8 @@ const CandidateList = () => {
 
                             <tbody class='text-sm divide-y divide-gray-100'>
                                 {
-                                    data?.data?.applicants?.map(({ email, id, firstName, lastName }) => (
-                                        <tr>
+                                    data?.data?.applicants?.map(({ email, id: applicantId, firstName, lastName, status }) => (
+                                        <tr key={applicantId}>
                                             <td class='p-2'>
                                                 <div class='font-medium text-gray-800'>{email}</div>
                                             </td>
@@ -66,6 +75,29 @@ const CandidateList = () => {
                                                     </button>
                                                 </div>
                                             </td>
+                                            <td class='p-2 text-left'>
+                                                <div class='flex justify-center'>
+                                                    {
+                                                        status === "approved"
+                                                            ?
+                                                            <button
+                                                                className=' bg-primary/30 transition-all w-2/5  block py-2 px-3 rounded-full'
+                                                                disabled
+                                                            >
+                                                                Approved
+                                                            </button>
+                                                            :
+                                                            <button
+                                                                className='hover:bg-primary hover:text-white bg-primary/10 transition-all w-2/5 block py-2 px-3 rounded-full'
+                                                                onClick={() => approveAJob({ jobId: id, applicantId })}
+                                                            >
+                                                                Approve
+                                                            </button>
+                                                    }
+
+                                                </div>
+                                            </td>
+
                                         </tr>
                                     ))}
                             </tbody>

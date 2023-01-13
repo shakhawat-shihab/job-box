@@ -52,6 +52,7 @@ const EmployerRegistration = () => {
   const onSubmit = (data) => {
     console.log(data);
     postUser({ ...data, role: "employer" });
+    navigate('/')
   };
 
   return (
@@ -144,7 +145,7 @@ const EmployerRegistration = () => {
               {employeeRange
                 .sort((a, b) => a.localeCompare(b))
                 .map((category) => (
-                  <option value={category}>{category}</option>
+                  <option key={category} value={category}>{category}</option>
                 ))}
             </select>
           </div>
@@ -157,7 +158,7 @@ const EmployerRegistration = () => {
               {businessCategory
                 .sort((a, b) => a.localeCompare(b))
                 .map((category) => (
-                  <option value={category}>{category}</option>
+                  <option key={category} value={category}>{category}</option>
                 ))}
             </select>
           </div>

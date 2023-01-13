@@ -8,7 +8,7 @@ const jobApi = apiSlice.injectEndpoints({
                 url: "/job",
                 body: data
             }),
-            invalidatesTags: ["Jobs"]
+            invalidatesTags: ["AllJobs"]
         }),
         apply: builder.mutation({
             query: (data) => ({
@@ -16,7 +16,15 @@ const jobApi = apiSlice.injectEndpoints({
                 url: "/apply",
                 body: data
             }),
-            // invalidatesTags: ["Jobs"]
+            // invalidatesTags: ["AllJobs"]
+        }),
+        approveJob: builder.mutation({
+            query: (data) => ({
+                method: "PATCH",
+                url: "/approve-job",
+                body: data
+            }),
+            invalidatesTags: ["Candidates"]
         }),
         question: builder.mutation({
             query: (data) => ({
@@ -38,7 +46,7 @@ const jobApi = apiSlice.injectEndpoints({
             query: () => ({
                 url: "/jobs",
             }),
-            providesTags: ["Jobs"]
+            providesTags: ["AllJobs"]
         }),
         getJobById: builder.query({
             query: (id) => ({
@@ -66,10 +74,11 @@ const jobApi = apiSlice.injectEndpoints({
         getCandidates: builder.query({
             query: (_id) => ({
                 url: `/candidates/${_id}`,
-            })
+            }),
+            providesTags: ["Candidates"]
         }),
 
     })
 })
 
-export const { usePostJobMutation, useGetJobsQuery, useGetJobByIdQuery, useApplyMutation, useGetAppliedJobsQuery, useGetMyJobsQuery, useQuestionMutation, useReplyMutation, useCloseJobMutation, useGetCandidatesQuery } = jobApi
+export const { usePostJobMutation, useGetJobsQuery, useGetJobByIdQuery, useApplyMutation, useGetAppliedJobsQuery, useGetMyJobsQuery, useQuestionMutation, useReplyMutation, useCloseJobMutation, useGetCandidatesQuery, useApproveJobMutation } = jobApi

@@ -15,12 +15,12 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
+        // console.log(user);
         dispatch(getUser(user?.email))
       }
       else {
         // dispatch(setUser(""))
-        console.log("else part")
+        // console.log("else part")
         dispatch(getUser(user?.email))
         dispatch(toggleLoading())
       }
