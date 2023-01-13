@@ -5,7 +5,7 @@ import { useGetJobsQuery } from "../features/job/jobApi";
 
 const Jobs = () => {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useGetJobsQuery();
+  const { data, isLoading, isError } = useGetJobsQuery(null, { pollingInterval: 5000 });
   // const { position, companyName } = data.data || {};
 
 

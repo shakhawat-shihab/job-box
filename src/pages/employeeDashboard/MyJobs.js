@@ -7,7 +7,7 @@ import { useGetJobsQuery, useGetMyJobsQuery } from '../../features/job/jobApi';
 const MyJobs = () => {
     const navigate = useNavigate();
     const { user: { email, _id } } = useSelector(state => state.auth)
-    const { data, isLoading, isError } = useGetMyJobsQuery(email);
+    const { data, isLoading, isError } = useGetMyJobsQuery(email, { pollingInterval: 4000 });
     console.log('my job ', data)
     return (
         <div className='pt-14'>

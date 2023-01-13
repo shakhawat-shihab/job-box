@@ -17,6 +17,7 @@ const jobApi = apiSlice.injectEndpoints({
                 body: data
             }),
             // invalidatesTags: ["AllJobs"]
+            invalidatesTags: ["Candidates"]
         }),
         approveJob: builder.mutation({
             query: (data) => ({

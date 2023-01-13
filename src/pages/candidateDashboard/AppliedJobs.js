@@ -14,7 +14,9 @@ const AppliedJobs = () => {
     user: { email },
   } = useSelector((state) => state.auth);
 
-  const { data, isLoading } = useGetAppliedJobsQuery(email);
+  const { data, isLoading } = useGetAppliedJobsQuery(email,
+    { pollingInterval: 4000 }
+  );
 
 
 
