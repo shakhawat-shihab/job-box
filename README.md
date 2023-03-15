@@ -1,6 +1,6 @@
 #Features
 
-- [x] User authentication using Firebase is implemented.
+- [x] User authentication using Firebase is implemented. (Google authentication)
 - [x] After creating account user have to chose a role.
 - [x] An employeer can publish a job.
 - [x] Employer can see the list of the candidates.
